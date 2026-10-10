@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ai-xiaogou
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/ai_xiaogou?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:}
+  data:
+    mongodb:
+      # 任务5 MongoDB 聊天记忆持久化（MongoDB 服务需启动）
+      uri: ${MONGODB_URI:mongodb://localhost:27017/ai_xiaogou}
+
+# LangChain4j 社区百炼接入：EmbeddingModel 由 starter 自动装配（RAG 向量化）
+langchain4j:
+  community:
+    dashscope:
+      embedding-model:
+        api-key: ${DASHSCOPE_API_KEY}
+        model-name: text-embedding-v3
+
+  # 聊天模型走百炼 OpenAI 兼容模式（原生 Generation API 不触发 Function Calling，
+  # 兼容模式已验证工具调用正常），模型仍为通义千问 qwen-plus
+  open-ai:
+    chat-model:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode/v1
+      api-key: ${DASHSCOPE_API_KEY}
+      model-name: qwen-plus
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: auto
+
+# 聊天记忆存储选择：in-memory（不依赖外部服务）| mongodb（默认，MongoDB 聊天记忆持久化，MongoDB 服务需启动）
+ai:
+  memory:
+    store: ${AI_MEMORY_STORE:in-memory}
+
+logging:
+  level:
+    root: info

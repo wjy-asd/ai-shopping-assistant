@@ -1,0 +1,36 @@
+# Build outputs and dependencies
+target/
+frontend/node_modules/
+frontend/dist/
+*.class
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+application-local.yml
+application-local.yaml
+application-local.properties
+
+# Logs and local runtime artifacts
+*.log
+*.err.log
+_t.json
+
+# IDE / OS files
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local reports, archives and temporary exports
+*.docx
+*.zip
+_*.png
+AGENTS.md
+
+# Keep curated public screenshots only
+!docs/screenshots/
+!docs/screenshots/*.png
